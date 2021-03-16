@@ -44,9 +44,23 @@ class Album
      */
     private $songs;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $releasedAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
     public function __construct()
     {
         $this->songs = new ArrayCollection();
+    }
+
+    public function __toString(): string {
+        return $this->getTitle(); 
     }
 
     public function getId(): ?int
@@ -128,6 +142,30 @@ class Album
                 $song->setAlbum(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReleasedAt(): ?\DateTimeInterface
+    {
+        return $this->releasedAt;
+    }
+
+    public function setReleasedAt(\DateTimeInterface $releasedAt): self
+    {
+        $this->releasedAt = $releasedAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
