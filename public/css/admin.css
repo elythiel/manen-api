@@ -1,0 +1,60 @@
+.btn {
+    padding: 10px 20px;
+}
+.btn-primary, .btn-primary.focus, .btn-primary:focus, .btn-primary:hover,
+.btn-secondary, .btn-secondary.focus, .btn-secondary:focus, .btn-secondary:hover
+{
+    border: none;
+    box-shadow: none;
+}
+
+/* ***** FORM ***** */
+
+.form-group,
+.form-widget-compound .form-group
+{
+    display: block;
+    padding: 0 0 5px 0;
+}
+/* sub collection items */
+.field-collection-item {
+    padding: 10px;
+    border: 1px solid var(--gray-400);
+    border-radius: var(--border-radius);
+    display: block;
+    position: relative;
+}
+/* sub collection buttons */
+.field-collection-delete-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 15px;
+}
+
+@media (min-width: 1024px) {
+    .form-group label,
+    .form-group legend.col-form-label
+    {
+        margin-bottom: 10px;
+        text-align: left;
+    }
+    .form-widget {
+        padding: 0;
+    }
+    .field-collection legend.col-form-label {
+        font-size: larger;
+        font-weight: bold;
+    }
+}
+
+/* form inputs */
+.form-widget input.form-control,
+.form-widget select.form-control,
+.form-widget textarea.form-control
+{
+    max-width: none;
+}
+.form-widget input[type=number] {
+    max-width: 100px;
+}

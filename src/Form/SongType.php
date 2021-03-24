@@ -39,7 +39,10 @@ class SongType extends AbstractType
                 'help' => 'Invités, séparés par des virgules'
             ])
             ->add('lyrics', TextareaType::class, [
-                'label' => 'Paroles'
+                'label' => 'Paroles',
+                'attr' => [
+                    'rows' => 8
+                ]
             ])
         ;
     }

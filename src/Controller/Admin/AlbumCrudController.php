@@ -33,13 +33,17 @@ class AlbumCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('title'),
-            UrlField::new('youtube'),
-            UrlField::new('spotify'),
+            TextField::new('title')->setLabel('Titre'),
+            UrlField::new('youtube')->setLabel('Lien Youtube'),
+            UrlField::new('spotify')->setLabel('Lien Spotify'),
             TextField::new('image'),
-            DateField::new('releasedAt'),
-            DateTimeField::new('createdAt')->hideOnForm(),
+            DateField::new('releasedAt')->setLabel('Date de sortie'),
+            DateTimeField::new('createdAt')
+                ->hideOnForm()
+                ->setLabel('Créé le'),
             CollectionField::new('songs')
+                ->setLabel('Pistes')
+                ->hideOnIndex()
                 ->allowAdd(true)
                 ->allowDelete(true)
                 ->setFormType(CollectionType::class)
