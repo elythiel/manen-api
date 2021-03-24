@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Song;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -17,18 +18,10 @@ class SongCrudController extends AbstractCrudController
     {
         return Song::class;
     }
-
-    // public function configureFields(string $pageName): iterable
-    // {
-    //     return [
-    //         IdField::new('id')
-    //             ->hideOnForm(),
-    //         AssociationField::new('album'),
-    //         IntegerField::new('trackId'),
-    //         TextField::new('title'),
-    //         UrlField::new('youtube'),
-    //         UrlField::new('spotify'),
-    //         TextareaField::new('lyrics')
-    //     ];
-    // }
+    
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('album');
+    }
 }

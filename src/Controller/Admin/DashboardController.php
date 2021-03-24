@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Album;
+use App\Entity\Concert;
 use App\Entity\Song;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -31,8 +32,12 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToCrud('Albums', 'fas fa-map-marker-alt', Album::class);
-        yield MenuItem::linkToCrud('Chansons', 'fas fa-comments', Song::class);
+        yield MenuItem::section('Albums');
+        yield MenuItem::linkToCrud('Albums', 'fas fa-compact-disc', Album::class);
+        yield MenuItem::linkToCrud('Titres', 'fas fa-music', Song::class);
+
+        yield MenuItem::section('Concerts');
+        yield MenuItem::linkToCrud('Concerts', 'fas fa-calendar-day', Concert::class);
     }
 
     public function configureAssets(): Assets
