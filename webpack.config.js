@@ -78,3 +78,15 @@ Encore
 ;
 
 module.exports = Encore.getWebpackConfig();
+
+if (Encore.isProduction()) {
+    Encore.addPlugin(new PurgeCssPlugin({
+          paths: glob.sync([
+              path.join(__dirname, 'templates/**/*.html.twig')
+          ]),
+          defaultExtractor: (content) => {
+              return content.match(/[\w-/:]+(?<!:)/g) || [];
+          }
+      }));
+  }
+;
