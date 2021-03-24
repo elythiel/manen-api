@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\SongRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PrePersist;
 
 /**
  * @ORM\Entity(repositoryClass=SongRepository::class)
+ * @HasLifecycleCallbacks
  */
 class Song
 {
@@ -47,6 +50,16 @@ class Song
      * @ORM\Column(type="integer")
      */
     private $trackId;
+
+    /**
+     * @ORM\Column(type="simple_array", nullable=true)
+     */
+    private $authors = [];
+
+    /**
+     * @ORM\Column(type="simple_array", nullable=true)
+     */
+    private $guests = [];
 
     public function __toString(): string {
         return $this->getTitle();
@@ -125,6 +138,36 @@ class Song
     public function setTrackId(int $trackId): self
     {
         $this->trackId = $trackId;
+
+        return $this;
+    }
+
+    public function getAuthors(): string
+    {
+        return implode(',', $this->authors);
+    }
+
+    public function setAuthors($authors): self
+    {
+        if(is_string($authors)) {
+            $authors = explode(',', $authors);
+        }
+        $this->authors = $authors;
+
+        return $this;
+    }
+
+    public function getGuests(): string
+    {
+        return implode(',', $this->guests);
+    }
+
+    public function setGuests($guests): self
+    {
+        if(is_string($guests)) {
+            $guests = explode(',', $guests);
+        }
+        $this->guests = $guests;
 
         return $this;
     }

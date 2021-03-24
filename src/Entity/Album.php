@@ -40,7 +40,7 @@ class Album
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity=Song::class, mappedBy="album")
+     * @ORM\OneToMany(targetEntity=Song::class, mappedBy="album", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $songs;
 
