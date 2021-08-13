@@ -2,19 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Repository\AdminRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Entity(repositoryClass=AdminRepository::class)
  */
-class User implements UserInterface
+class Admin implements UserInterface
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="uuid", unique=true)
      */
     private $id;
 
@@ -34,12 +34,17 @@ class User implements UserInterface
      */
     private $password;
 
+    public function __construct()
+    {
+        $this->id = Uuid::v4();
+    }
+
     public function __toString()
     {
         return $this->getUsername();
     }
 
-    public function getId(): ?int
+    public function getId(): Uuid
     {
         return $this->id;
     }
@@ -85,7 +90,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
