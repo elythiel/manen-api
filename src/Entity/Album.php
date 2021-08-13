@@ -7,12 +7,16 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=AlbumRepository::class)$
  * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable
  */
 class Album
 {
@@ -43,6 +47,12 @@ class Album
     private $image;
 
     /**
+     * @Vich\UploadableField(mapping="album_images", fileNameProperty="image")
+     * @Assert\Image()
+     */
+    private $imageFile;
+
+    /**
      * @ORM\OneToMany(targetEntity=Song::class, mappedBy="album", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $songs;
@@ -57,10 +67,16 @@ class Album
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->id = Uuid::v4();
         $this->songs = new ArrayCollection();
+        $this->updatedAt = new \DateTime();
     }
 
     public function __toString(): string {
@@ -120,6 +136,22 @@ class Album
         return $this;
     }
 
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $file): self
+    {
+        $this->imageFile = $file;
+
+        if($file) {
+            $this->setUpdatedAt();
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection|Song[]
      */
@@ -174,6 +206,20 @@ class Album
     {
         $this->createdAt = new DateTimeImmutable();
 
+        return $this;
+    }
+
+    public function getUpdatedAt(): \DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAt(): self
+    {
+        $this->updatedAt = new DateTimeImmutable();
         return $this;
     }
 }

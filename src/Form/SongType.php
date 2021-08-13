@@ -43,15 +43,13 @@ class SongType extends AbstractType
                 'attr' => [
                     'rows' => 8
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Song::class,
-            
             'allow_add' => true,
             'allow_delete' => false,
             'delete_empty' => false,
@@ -59,12 +57,4 @@ class SongType extends AbstractType
         ]);
     }
 
-    public function onPostSetData(FormEvent $event)
-    {
-        dd($event);
-        if ($event->getData() && $event->getData()->getId()) {
-            $form = $event->getForm();
-            // unset($form['user']);
-        }
-    }
 }
