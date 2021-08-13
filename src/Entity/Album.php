@@ -3,19 +3,22 @@
 namespace App\Entity;
 
 use App\Repository\AlbumRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Uid\Uuid;
 
 /**
- * @ORM\Entity(repositoryClass=AlbumRepository::class)
+ * @ORM\Entity(repositoryClass=AlbumRepository::class)$
+ * @ORM\HasLifecycleCallbacks()
  */
 class Album
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="uuid", unique=true)
      */
     private $id;
 
@@ -56,6 +59,7 @@ class Album
 
     public function __construct()
     {
+        $this->id = Uuid::v4();
         $this->songs = new ArrayCollection();
     }
 
@@ -63,7 +67,7 @@ class Album
         return $this->getTitle(); 
     }
 
-    public function getId(): ?int
+    public function getId(): Uuid
     {
         return $this->id;
     }
@@ -163,9 +167,12 @@ class Album
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAt(): self
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new DateTimeImmutable();
 
         return $this;
     }
