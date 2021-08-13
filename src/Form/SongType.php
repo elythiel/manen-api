@@ -4,14 +4,13 @@ namespace App\Form;
 
 use App\Entity\Song;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SongType extends AbstractType
 {
@@ -19,10 +18,16 @@ class SongType extends AbstractType
     {
         $builder
             ->add('trackId', IntegerType::class, [
-                'label' => 'N° de piste'
+                'label' => 'N° de piste',
+                'constraints' => [
+                    new NotBlank()
+                ]
             ])
             ->add('title', TextType::class, [
-                'label' => 'Titre'
+                'label' => 'Titre',
+                'constraints' => [
+                    new NotBlank()
+                ]
             ])
             ->add('youtube', UrlType::class, [
                 'label' => 'Lien Youtube'
