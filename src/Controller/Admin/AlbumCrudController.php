@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -62,7 +63,10 @@ class AlbumCrudController extends AbstractCrudController
                     'allow_add' => true,
                     'allow_delete' => false,
                     'delete_empty' => false
-                ])
+                ]),
+            IntegerField::new('countSongs')
+                ->setLabel('Songs')
+                ->onlyOnIndex()
         ];
     }
 }
