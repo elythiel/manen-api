@@ -23,32 +23,38 @@ class Album
     /**
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
+     * @Groups({"get_albums"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get_albums", "get_song"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"get_albums"})
      */
     private $youtube;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"get_albums"})
      */
     private $spotify;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get_albums"})
      */
     private $image;
 
     /**
      * @Vich\UploadableField(mapping="album_images", fileNameProperty="image")
      * @Assert\Image()
+     * @Groups({"get_albums"})
      */
     private $imageFile;
 
@@ -60,6 +66,7 @@ class Album
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"get_albums"})
      */
     private $releasedAt;
 
