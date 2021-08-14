@@ -150,7 +150,7 @@ class Song
     public function getAuthors(): ?string
     {
         return !empty($this->authors)
-            ? implode(', ', $this->authors)
+            ? implode(',', $this->authors)
             : null;
     }
 
@@ -167,7 +167,7 @@ class Song
     public function getGuests(): ?string
     {
         return !empty($this->guests)
-            ? implode(', ', $this->guests)
+            ? implode(',', $this->guests)
             : null;
     }
 

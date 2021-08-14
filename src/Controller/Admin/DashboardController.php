@@ -7,6 +7,7 @@ use App\Entity\Concert;
 use App\Entity\GalleryImage;
 use App\Entity\Song;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -67,5 +68,11 @@ class DashboardController extends AbstractDashboardController
         $assets = Assets::new()
             ->addCssFile('css/admin.css');
         return $assets;
+    }
+
+    public function configureCrud(): Crud
+    {
+        return parent::configureCrud()
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
     }
 }

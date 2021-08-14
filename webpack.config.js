@@ -59,6 +59,20 @@ Encore
         config.corejs = 3;
     })
 
+    .copyFiles([
+        {
+            from: './node_modules/ckeditor4/',
+            to: 'ckeditor/[path][name].[ext]',
+            pattern: /\.(js|css)$/,
+            includeSubdirectories: false
+        },
+        {from: './node_modules/ckeditor4/adapters', to: 'ckeditor/adapters/[path][name].[ext]'},
+        {from: './node_modules/ckeditor4/lang', to: 'ckeditor/lang/[path][name].[ext]'},
+        {from: './node_modules/ckeditor4/plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
+        {from: './node_modules/ckeditor4/skins', to: 'ckeditor/skins/[path][name].[ext]'},
+        {from: './node_modules/ckeditor4/vendor', to: 'ckeditor/vendor/[path][name].[ext]'}
+    ])
+
     // enables Sass/SCSS support
     //.enableSassLoader()
 
@@ -81,12 +95,11 @@ module.exports = Encore.getWebpackConfig();
 
 if (Encore.isProduction()) {
     Encore.addPlugin(new PurgeCssPlugin({
-          paths: glob.sync([
-              path.join(__dirname, 'templates/**/*.html.twig')
-          ]),
-          defaultExtractor: (content) => {
-              return content.match(/[\w-/:]+(?<!:)/g) || [];
-          }
-      }));
-  }
-;
+        paths: glob.sync([
+            path.join(__dirname, 'templates/**/*.html.twig')
+        ]),
+        defaultExtractor: (content) => {
+            return content.match(/[\w-/:]+(?<!:)/g) || [];
+        }
+    }));
+}

@@ -43,15 +43,16 @@ class AlbumCrudController extends AbstractCrudController
                 ->setFormTypeOptions([
                     'allow_delete' => false
                 ])
+                ->setLabel('Cover')
                 ->onlyOnForms(),
             ImageField::new('image')
                 ->setBasePath('uploads/albums/')
+                ->setLabel('Cover')
                 ->onlyOnIndex(),
             DateField::new('releasedAt'),
             DateTimeField::new('createdAt')
                 ->hideOnForm(),
             CollectionField::new('songs')
-                ->setLabel('Pistes')
                 ->hideOnIndex()
                 ->allowAdd(true)
                 ->allowDelete(true)

@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class SongCrudController extends AbstractCrudController
 {
@@ -45,6 +46,10 @@ class SongCrudController extends AbstractCrudController
             TextField::new('guests')
                 ->setHelp('Invités, séparés par des virgules'),
             TextareaField::new('lyrics')
+                ->setFormType(CKEditorType::class)
+                ->setFormTypeOptions([
+                    'config' => ['song_lyrics']
+                ])
         ];
     }
 
