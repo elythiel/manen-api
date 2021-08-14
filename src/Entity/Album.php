@@ -3,19 +3,26 @@
 namespace App\Entity;
 
 use App\Repository\AlbumRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass=AlbumRepository::class)
+ * @ORM\Entity(repositoryClass=AlbumRepository::class)$
+ * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable
  */
 class Album
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="uuid", unique=true)
      */
     private $id;
 
@@ -40,7 +47,14 @@ class Album
     private $image;
 
     /**
+     * @Vich\UploadableField(mapping="album_images", fileNameProperty="image")
+     * @Assert\Image()
+     */
+    private $imageFile;
+
+    /**
      * @ORM\OneToMany(targetEntity=Song::class, mappedBy="album", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"trackId" = "ASC"})
      */
     private $songs;
 
@@ -54,16 +68,23 @@ class Album
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
     public function __construct()
     {
+        $this->id = Uuid::v4();
         $this->songs = new ArrayCollection();
+        $this->updatedAt = new \DateTime();
     }
 
     public function __toString(): string {
         return $this->getTitle(); 
     }
 
-    public function getId(): ?int
+    public function getId(): Uuid
     {
         return $this->id;
     }
@@ -116,6 +137,22 @@ class Album
         return $this;
     }
 
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $file): self
+    {
+        $this->imageFile = $file;
+
+        if($file) {
+            $this->setUpdatedAt();
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection|Song[]
      */
@@ -163,10 +200,27 @@ class Album
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAt(): self
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new DateTimeImmutable();
 
+        return $this;
+    }
+
+    public function getUpdatedAt(): \DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAt(): self
+    {
+        $this->updatedAt = new DateTimeImmutable();
         return $this;
     }
 }

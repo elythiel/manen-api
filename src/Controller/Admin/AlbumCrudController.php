@@ -12,9 +12,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class AlbumCrudController extends AbstractCrudController
 {
@@ -36,7 +38,15 @@ class AlbumCrudController extends AbstractCrudController
             TextField::new('title')->setLabel('Titre'),
             UrlField::new('youtube')->setLabel('Lien Youtube'),
             UrlField::new('spotify')->setLabel('Lien Spotify'),
-            TextField::new('image'),
+            TextField::new('imageFile')
+                ->setFormType(VichImageType::class)
+                ->setFormTypeOptions([
+                    'allow_delete' => false
+                ])
+                ->onlyOnForms(),
+            ImageField::new('image')
+                ->setBasePath('uploads/albums/')
+                ->onlyOnIndex(),
             DateField::new('releasedAt')->setLabel('Date de sortie'),
             DateTimeField::new('createdAt')
                 ->hideOnForm()
