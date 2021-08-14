@@ -54,7 +54,6 @@ class Album
     /**
      * @Vich\UploadableField(mapping="album_images", fileNameProperty="image")
      * @Assert\Image()
-     * @Groups({"get_albums"})
      */
     private $imageFile;
 

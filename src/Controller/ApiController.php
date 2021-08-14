@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Repository\AlbumRepository;
 use App\Repository\SongRepository;
+use App\Serializer\Normalizer\AlbumNormalizer;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +18,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/albums", name="api_get_albums", methods={"GET"}, format="json")
      */
-    public function getAlbums(AlbumRepository $albumRepository): JsonResponse
+    public function getAlbums(AlbumRepository $albumRepository, AlbumNormalizer $albumNormalizer): JsonResponse
     {
         $albums = $albumRepository->findAll();
         return $this->json($albums, Response::HTTP_OK, [], [
@@ -29,13 +31,14 @@ class ApiController extends AbstractController
      */
     public function getAlbumSongs(SongRepository $songRepository, Request $request, $id): JsonResponse
     {
-        if(!Uuid::isValid($id)) {
+        if (!Uuid::isValid($id)) {
             return $this->json(null, Response::HTTP_BAD_REQUEST);
         }
         // get song from DB
-        $songs = $songRepository->findBy([
-            'album' => $id
-        ]);
+        $songs = $songRepository->findBy(
+            ['album' => $id],
+            ['trackId' => 'asc']
+        );
         return $this->json($songs, Response::HTTP_OK, [], [
             'groups' => 'get_album_songs'
         ]);
