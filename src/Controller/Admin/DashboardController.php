@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Album;
 use App\Entity\Concert;
+use App\Entity\GalleryImage;
 use App\Entity\Song;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -26,6 +27,22 @@ class DashboardController extends AbstractDashboardController
         return $this->redirect($routeBuilder->setController(AlbumCrudController::class)->generateUrl());
     }
 
+    /**
+     * @Route("/admin/phpinfo", name="easyadmin_phpinfo")
+     */
+    public function phpInfoAction(): Response
+    {
+        if ($this->container->has('profiler')) {
+            $this->container->get('profiler')->disable();
+        }
+        ob_start();
+        phpinfo();
+        $str = ob_get_contents();
+        ob_get_clean();
+
+        return new Response($str);
+    }
+
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -40,6 +57,9 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Concerts');
         yield MenuItem::linkToCrud('Concerts', 'fas fa-calendar-day', Concert::class);
+
+        yield MenuItem::section('Galerie');
+        yield MenuItem::linkToCrud('Galerie', 'fas fa-file-image', GalleryImage::class);
     }
 
     public function configureAssets(): Assets

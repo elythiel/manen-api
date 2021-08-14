@@ -34,7 +34,9 @@ class GalleryImage
 
     /**
      * @Vich\UploadableField(mapping="gallery_images", fileNameProperty="image")
-     * @Assert\Image()
+     * @Assert\Image(
+     *     maxSize=5M
+     * )
      */
     private $imageFile;
 
