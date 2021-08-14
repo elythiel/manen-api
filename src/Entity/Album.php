@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass=AlbumRepository::class)$
+ * @ORM\Entity(repositoryClass=AlbumRepository::class)
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */

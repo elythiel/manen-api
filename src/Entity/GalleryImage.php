@@ -12,6 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=GalleryImageRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable()
  */
 class GalleryImage
