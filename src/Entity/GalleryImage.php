@@ -6,6 +6,7 @@ use App\Repository\GalleryImageRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -25,11 +26,13 @@ class GalleryImage
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"get_gallery"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get_gallery"})
      */
     private $image;
 

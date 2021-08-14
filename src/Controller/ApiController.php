@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\AlbumRepository;
+use App\Repository\GalleryImageRepository;
 use App\Repository\SongRepository;
 use App\Serializer\Normalizer\AlbumNormalizer;
 use Doctrine\ORM\NoResultException;
@@ -18,7 +19,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/albums", name="api_get_albums", methods={"GET"}, format="json")
      */
-    public function getAlbums(AlbumRepository $albumRepository, AlbumNormalizer $albumNormalizer): JsonResponse
+    public function getAlbums(AlbumRepository $albumRepository): JsonResponse
     {
         $albums = $albumRepository->findAll();
         return $this->json($albums, Response::HTTP_OK, [], [
@@ -41,6 +42,17 @@ class ApiController extends AbstractController
         );
         return $this->json($songs, Response::HTTP_OK, [], [
             'groups' => 'get_album_songs'
+        ]);
+    }
+
+    /**
+     * @Route("/gallery", name="api_get_gallery_images", methods={"GET"}, format="json")
+     */
+    public function getGalleryImages(GalleryImageRepository $galleryImageRepository): JsonResponse
+    {
+        $images = $galleryImageRepository->findAll();
+        return $this->json($images, Response::HTTP_OK, [], [
+            'groups' => 'get_gallery'
         ]);
     }
 
