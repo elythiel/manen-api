@@ -3,9 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Song;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,36 +18,25 @@ class SongType extends AbstractType
     {
         $builder
             ->add('trackId', IntegerType::class, [
-                'label' => 'N° de piste',
                 'constraints' => [
                     new NotBlank()
                 ]
             ])
             ->add('title', TextType::class, [
-                'label' => 'Titre',
                 'constraints' => [
                     new NotBlank()
                 ]
             ])
-            ->add('youtube', UrlType::class, [
-                'label' => 'Lien Youtube'
-            ])
-            ->add('spotify', UrlType::class, [
-                'label' => 'Lien Spotify'
-            ])
+            ->add('youtube', UrlType::class)
+            ->add('spotify', UrlType::class)
             ->add('authors', TextType::class, [
-                'label' => 'Auteurs',
                 'help' => 'Auteurs, séparés par des virgules'
             ])
             ->add('guests', TextType::class, [
-                'label' => 'Invités',
                 'help' => 'Invités, séparés par des virgules'
             ])
-            ->add('lyrics', TextareaType::class, [
-                'label' => 'Paroles',
-                'attr' => [
-                    'rows' => 8
-                ]
+            ->add('lyrics', CKEditorType::class, [
+                'config' => ['song_lyrics']
             ]);
     }
 

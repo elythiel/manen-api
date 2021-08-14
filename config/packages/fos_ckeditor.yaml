@@ -1,0 +1,13 @@
+# Read the documentation: https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html
+fos_ck_editor:
+    base_path: "build/ckeditor"
+    js_path:   "build/ckeditor/ckeditor.js"
+
+    configs:
+        song_lyrics:
+            toolbar: "md_toolbar"
+            removePlugins: "elementspath"
+
+    toolbars:
+        configs:
+            md_toolbar: [ ["Undo", "Redo"], ["RemoveFormat"], [ "Maximize" ], ["Bold", "Italic", "Underline"], ["NumberedList", "BulletedList"], ["HorizontalRule"] ]

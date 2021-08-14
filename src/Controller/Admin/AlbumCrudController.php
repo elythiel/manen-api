@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -35,24 +36,24 @@ class AlbumCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('title')->setLabel('Titre'),
-            UrlField::new('youtube')->setLabel('Lien Youtube'),
-            UrlField::new('spotify')->setLabel('Lien Spotify'),
+            TextField::new('title'),
+            UrlField::new('youtube'),
+            UrlField::new('spotify'),
             TextField::new('imageFile')
                 ->setFormType(VichImageType::class)
                 ->setFormTypeOptions([
                     'allow_delete' => false
                 ])
+                ->setLabel('Cover')
                 ->onlyOnForms(),
             ImageField::new('image')
                 ->setBasePath('uploads/albums/')
+                ->setLabel('Cover')
                 ->onlyOnIndex(),
-            DateField::new('releasedAt')->setLabel('Date de sortie'),
+            DateField::new('releasedAt'),
             DateTimeField::new('createdAt')
-                ->hideOnForm()
-                ->setLabel('Créé le'),
+                ->hideOnForm(),
             CollectionField::new('songs')
-                ->setLabel('Pistes')
                 ->hideOnIndex()
                 ->allowAdd(true)
                 ->allowDelete(true)
@@ -62,7 +63,10 @@ class AlbumCrudController extends AbstractCrudController
                     'allow_add' => true,
                     'allow_delete' => false,
                     'delete_empty' => false
-                ])
+                ]),
+            IntegerField::new('countSongs')
+                ->setLabel('Songs')
+                ->onlyOnIndex()
         ];
     }
 }
