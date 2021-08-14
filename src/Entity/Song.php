@@ -147,9 +147,11 @@ class Song
         return $this;
     }
 
-    public function getAuthors(): string
+    public function getAuthors(): ?string
     {
-        return implode(',', $this->authors);
+        return !empty($this->authors)
+            ? implode(',', $this->authors)
+            : null;
     }
 
     public function setAuthors($authors): self
@@ -162,9 +164,11 @@ class Song
         return $this;
     }
 
-    public function getGuests(): string
+    public function getGuests(): ?string
     {
-        return implode(',', $this->guests);
+        return !empty($this->guests)
+            ? implode(',', $this->guests)
+            : null;
     }
 
     public function setGuests($guests): self

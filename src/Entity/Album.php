@@ -183,6 +183,11 @@ class Album
         return $this;
     }
 
+    public function getCountSongs(): int
+    {
+        return count($this->songs);
+    }
+
     public function getReleasedAt(): ?\DateTimeInterface
     {
         return $this->releasedAt;
