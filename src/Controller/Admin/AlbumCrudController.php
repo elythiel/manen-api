@@ -35,9 +35,9 @@ class AlbumCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('title')->setLabel('Titre'),
-            UrlField::new('youtube')->setLabel('Lien Youtube'),
-            UrlField::new('spotify')->setLabel('Lien Spotify'),
+            TextField::new('title'),
+            UrlField::new('youtube'),
+            UrlField::new('spotify'),
             TextField::new('imageFile')
                 ->setFormType(VichImageType::class)
                 ->setFormTypeOptions([
@@ -47,10 +47,9 @@ class AlbumCrudController extends AbstractCrudController
             ImageField::new('image')
                 ->setBasePath('uploads/albums/')
                 ->onlyOnIndex(),
-            DateField::new('releasedAt')->setLabel('Date de sortie'),
+            DateField::new('releasedAt'),
             DateTimeField::new('createdAt')
-                ->hideOnForm()
-                ->setLabel('Créé le'),
+                ->hideOnForm(),
             CollectionField::new('songs')
                 ->setLabel('Pistes')
                 ->hideOnIndex()
