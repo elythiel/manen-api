@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Repository\AlbumRepository;
+use App\Repository\ConcertRepository;
 use App\Repository\GalleryImageRepository;
 use App\Repository\SongRepository;
-use App\Serializer\Normalizer\AlbumNormalizer;
-use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +53,15 @@ class ApiController extends AbstractController
         return $this->json($images, Response::HTTP_OK, [], [
             'groups' => 'get_gallery'
         ]);
+    }
+
+    /**
+     * @Route("/concerts", name="api_get_concerts", methods={"GET"}, format="json")
+     */
+    public function getConcerts(ConcertRepository $concertRepository): JsonResponse
+    {
+        $images = $concertRepository->findBy([], ['date' => 'desc']);
+        return $this->json($images, Response::HTTP_OK);
     }
 
 }
