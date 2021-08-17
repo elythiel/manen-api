@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass=AlbumRepository::class)$
+ * @ORM\Entity(repositoryClass=AlbumRepository::class)
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
@@ -54,7 +54,6 @@ class Album
     /**
      * @Vich\UploadableField(mapping="album_images", fileNameProperty="image")
      * @Assert\Image()
-     * @Groups({"get_albums"})
      */
     private $imageFile;
 

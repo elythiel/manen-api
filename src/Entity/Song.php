@@ -41,7 +41,7 @@ class Song
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"get_album_songs"})
+     * @Groups({"get_album_songs", "get_song_lyrics"})
      */
     private $lyrics;
 

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\AlbumRepository;
+use App\Repository\ConcertRepository;
+use App\Repository\GalleryImageRepository;
 use App\Repository\SongRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,16 +31,37 @@ class ApiController extends AbstractController
      */
     public function getAlbumSongs(SongRepository $songRepository, Request $request, $id): JsonResponse
     {
-        if(!Uuid::isValid($id)) {
+        if (!Uuid::isValid($id)) {
             return $this->json(null, Response::HTTP_BAD_REQUEST);
         }
         // get song from DB
-        $songs = $songRepository->findBy([
-            'album' => $id
-        ]);
+        $songs = $songRepository->findBy(
+            ['album' => $id],
+            ['trackId' => 'asc']
+        );
         return $this->json($songs, Response::HTTP_OK, [], [
             'groups' => 'get_album_songs'
         ]);
+    }
+
+    /**
+     * @Route("/gallery", name="api_get_gallery_images", methods={"GET"}, format="json")
+     */
+    public function getGalleryImages(GalleryImageRepository $galleryImageRepository): JsonResponse
+    {
+        $images = $galleryImageRepository->findAll();
+        return $this->json($images, Response::HTTP_OK, [], [
+            'groups' => 'get_gallery'
+        ]);
+    }
+
+    /**
+     * @Route("/concerts", name="api_get_concerts", methods={"GET"}, format="json")
+     */
+    public function getConcerts(ConcertRepository $concertRepository): JsonResponse
+    {
+        $images = $concertRepository->findBy([], ['date' => 'desc']);
+        return $this->json($images, Response::HTTP_OK);
     }
 
 }
