@@ -17,26 +17,31 @@ class Song
     /**
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
+     * @Groups({"get_album_songs"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get_album_songs"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"get_album_songs"})
      */
     private $youtube;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"get_album_songs"})
      */
     private $spotify;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"get_album_songs", "get_song_lyrics"})
      */
     private $lyrics;
 
@@ -48,16 +53,19 @@ class Song
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"get_album_songs"})
      */
     private $trackId;
 
     /**
      * @ORM\Column(type="simple_array", nullable=true)
+     * @Groups({"get_album_songs"})
      */
     private $authors = [];
 
     /**
      * @ORM\Column(type="simple_array", nullable=true)
+     * @Groups({"get_album_songs"})
      */
     private $guests = [];
 

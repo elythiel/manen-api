@@ -4,7 +4,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "composer/package-versions-deprecated": "1.11.99.1",
@@ -14,6 +14,7 @@
         "doctrine/orm": "^2.8",
         "easycorp/easyadmin-bundle": "^3",
         "friendsofsymfony/ckeditor-bundle": "^2.3",
+        "nelmio/cors-bundle": "^2.1",
         "sensio/framework-extra-bundle": "^6.1",
         "symfony/console": "5.3.*",
         "symfony/dotenv": "5.3.*",
@@ -74,7 +75,9 @@
         }
     },
     "require-dev": {
+        "ext-gd": "^8.0",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "fzaninotto/faker": "^1.9",
         "symfony/maker-bundle": "^1.29"
     }
 }

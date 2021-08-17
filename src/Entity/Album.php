@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass=AlbumRepository::class)$
+ * @ORM\Entity(repositoryClass=AlbumRepository::class)
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
@@ -23,26 +23,31 @@ class Album
     /**
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
+     * @Groups({"get_albums"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get_albums", "get_song"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"get_albums"})
      */
     private $youtube;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"get_albums"})
      */
     private $spotify;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get_albums"})
      */
     private $image;
 
@@ -60,6 +65,7 @@ class Album
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"get_albums"})
      */
     private $releasedAt;
 
