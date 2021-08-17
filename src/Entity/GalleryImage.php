@@ -13,26 +13,32 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=GalleryImageRepository::class)
- * @ORM\HasLifecycleCallbacks()
- * @Vich\Uploadable()
+ * @ORM\HasLifecycleCallbacks
+ * @Vich\Uploadable
  */
 class GalleryImage
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
+     *
+     * @var Uuid
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"get_gallery"})
+     *
+     * @var string|null
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"get_gallery"})
+     *
+     * @var string
      */
     private $image;
 
@@ -41,11 +47,15 @@ class GalleryImage
      * @Assert\Image(
      *     maxSize="5M"
      * )
+     *
+     * @var File|null
      */
     private $imageFile;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     *
+     * @var DateTimeImmutable
      */
     private $createdAt;
 
@@ -92,7 +102,7 @@ class GalleryImage
     {
         $this->imageFile = $file;
 
-        if($file) {
+        if ($file) {
             $this->setCreatedAt();
         }
 

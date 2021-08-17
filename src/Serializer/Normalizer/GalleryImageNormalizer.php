@@ -10,18 +10,20 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class GalleryImageNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
+    /** @var ObjectNormalizer */
     private $normalizer;
 
+    /** @var UrlHelper */
     private $urlHelper;
 
+    /** @var string */
     private $imagePath;
 
     public function __construct(
         ObjectNormalizer $normalizer,
         UrlHelper $urlHelper,
         ParameterBagInterface $params
-    )
-    {
+    ) {
         $this->normalizer = $normalizer;
         $this->urlHelper = $urlHelper;
         $this->imagePath = $params->get('gallery_images');
@@ -31,7 +33,7 @@ class GalleryImageNormalizer implements NormalizerInterface, CacheableSupportsMe
     {
         $data = $this->normalizer->normalize($object, $format, $context);
 
-        $data['image'] = $this->urlHelper->getAbsoluteUrl($this->imagePath . '/' . $data['image']);
+        $data['image'] = $this->urlHelper->getAbsoluteUrl($this->imagePath.'/'.$data['image']);
 
         return $data;
     }

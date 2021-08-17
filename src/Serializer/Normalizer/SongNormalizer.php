@@ -8,6 +8,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class SongNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
+    /** @var ObjectNormalizer */
     private $normalizer;
 
     public function __construct(ObjectNormalizer $normalizer)
@@ -19,10 +20,10 @@ class SongNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
     {
         $data = $this->normalizer->normalize($object, $format, $context);
 
-        if(!is_null($data['authors'])) {
+        if (!is_null($data['authors'])) {
             $data['authors'] = array_map('trim', explode(',', $data['authors']));
         }
-        if(!is_null($data['guests'])) {
+        if (!is_null($data['guests'])) {
             $data['guests'] = array_map('trim', explode(',', $data['guests']));
         }
 

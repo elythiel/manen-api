@@ -14,41 +14,41 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SongType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('trackId', IntegerType::class, [
                 'constraints' => [
-                    new NotBlank()
-                ]
+                    new NotBlank(),
+                ],
             ])
             ->add('title', TextType::class, [
                 'constraints' => [
-                    new NotBlank()
-                ]
+                    new NotBlank(),
+                ],
             ])
             ->add('youtube', UrlType::class)
             ->add('spotify', UrlType::class)
             ->add('authors', TextType::class, [
-                'help' => 'Auteurs, séparés par des virgules'
+                'help' => 'Auteurs, séparés par des virgules',
             ])
             ->add('guests', TextType::class, [
-                'help' => 'Invités, séparés par des virgules'
+                'help' => 'Invités, séparés par des virgules',
             ])
             ->add('lyrics', CKEditorType::class, [
-                'config' => ['song_lyrics']
-            ]);
+                'config' => ['song_lyrics'],
+            ])
+        ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Song::class,
             'allow_add' => true,
             'allow_delete' => false,
             'delete_empty' => false,
-            'entry_options' => []
+            'entry_options' => [],
         ]);
     }
-
 }

@@ -26,7 +26,8 @@ class SongCrudController extends AbstractCrudController
     {
         return Actions::new()
             ->add(Crud::PAGE_INDEX, Action::EDIT)
-            ->add(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN);
+            ->add(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN)
+        ;
     }
 
     public function configureFields(string $pageName): iterable
@@ -48,8 +49,8 @@ class SongCrudController extends AbstractCrudController
             TextareaField::new('lyrics')
                 ->setFormType(CKEditorType::class)
                 ->setFormTypeOptions([
-                    'config' => ['song_lyrics']
-                ])
+                    'config' => ['song_lyrics'],
+                ]),
         ];
     }
 
@@ -57,6 +58,7 @@ class SongCrudController extends AbstractCrudController
     {
         return $filters
             ->add('album')
-            ->add('authors');
+            ->add('authors')
+        ;
     }
 }

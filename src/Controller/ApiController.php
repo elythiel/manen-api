@@ -21,15 +21,16 @@ class ApiController extends AbstractController
     public function getAlbums(AlbumRepository $albumRepository): JsonResponse
     {
         $albums = $albumRepository->findAll();
+
         return $this->json($albums, Response::HTTP_OK, [], [
-            'groups' => 'get_albums'
+            'groups' => 'get_albums',
         ]);
     }
 
     /**
      * @Route("/albums/{id}/songs", name="api_get_album_songs", methods={"GET"}, format="json")
      */
-    public function getAlbumSongs(SongRepository $songRepository, Request $request, $id): JsonResponse
+    public function getAlbumSongs(SongRepository $songRepository, Request $request, string $id): JsonResponse
     {
         if (!Uuid::isValid($id)) {
             return $this->json(null, Response::HTTP_BAD_REQUEST);
@@ -39,8 +40,9 @@ class ApiController extends AbstractController
             ['album' => $id],
             ['trackId' => 'asc']
         );
+
         return $this->json($songs, Response::HTTP_OK, [], [
-            'groups' => 'get_album_songs'
+            'groups' => 'get_album_songs',
         ]);
     }
 
@@ -50,8 +52,9 @@ class ApiController extends AbstractController
     public function getGalleryImages(GalleryImageRepository $galleryImageRepository): JsonResponse
     {
         $images = $galleryImageRepository->findAll();
+
         return $this->json($images, Response::HTTP_OK, [], [
-            'groups' => 'get_gallery'
+            'groups' => 'get_gallery',
         ]);
     }
 
@@ -61,7 +64,7 @@ class ApiController extends AbstractController
     public function getConcerts(ConcertRepository $concertRepository): JsonResponse
     {
         $images = $concertRepository->findBy([], ['date' => 'desc']);
+
         return $this->json($images, Response::HTTP_OK);
     }
-
 }
