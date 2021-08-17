@@ -15,16 +15,19 @@ class Admin implements UserInterface
     /**
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
+     * @var Uuid
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @var string
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
+     * @var string[]
      */
     private $roles = [];
 
@@ -78,6 +81,10 @@ class Admin implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param string[] $roles
+     * @return $this
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -114,7 +121,7 @@ class Admin implements UserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;

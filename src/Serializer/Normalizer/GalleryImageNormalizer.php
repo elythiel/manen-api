@@ -10,10 +10,13 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class GalleryImageNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
+    /** @var ObjectNormalizer  */
     private $normalizer;
 
+    /** @var UrlHelper  */
     private $urlHelper;
 
+    /** @var string */
     private $imagePath;
 
     public function __construct(

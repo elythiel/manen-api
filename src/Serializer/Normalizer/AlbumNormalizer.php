@@ -11,10 +11,13 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class AlbumNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
+    /** @var ObjectNormalizer */
     private $normalizer;
 
+    /** @var UrlHelper */
     private $urlHelper;
 
+    /** @var string */
     private $imagePath;
 
     public function __construct(

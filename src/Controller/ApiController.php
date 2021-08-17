@@ -29,7 +29,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/albums/{id}/songs", name="api_get_album_songs", methods={"GET"}, format="json")
      */
-    public function getAlbumSongs(SongRepository $songRepository, Request $request, $id): JsonResponse
+    public function getAlbumSongs(SongRepository $songRepository, Request $request, string $id): JsonResponse
     {
         if (!Uuid::isValid($id)) {
             return $this->json(null, Response::HTTP_BAD_REQUEST);

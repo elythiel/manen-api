@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\AlbumRepository;
+use DateTime;
 use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,58 +26,68 @@ class Album
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
      * @Groups({"get_albums"})
+     * @var Uuid
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"get_albums", "get_song"})
+     * @var string
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"get_albums"})
+     * @var string|null
      */
     private $youtube;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"get_albums"})
+     * @var string|null
      */
     private $spotify;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"get_albums"})
+     * @var string|null
      */
     private $image;
 
     /**
      * @Vich\UploadableField(mapping="album_images", fileNameProperty="image")
      * @Assert\Image()
+     * @var File|null
      */
     private $imageFile;
 
     /**
      * @ORM\OneToMany(targetEntity=Song::class, mappedBy="album", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"trackId" = "ASC"})
+     * @var Collection<Song>
      */
     private $songs;
 
     /**
      * @ORM\Column(type="date")
      * @Groups({"get_albums"})
+     * @var DateTimeInterface
      */
     private $releasedAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @var DateTimeInterface
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @var DateTimeInterface
      */
     private $updatedAt;
 
@@ -83,7 +95,7 @@ class Album
     {
         $this->id = Uuid::v4();
         $this->songs = new ArrayCollection();
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = new DateTime();
     }
 
     public function __toString(): string {
@@ -95,7 +107,7 @@ class Album
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -194,19 +206,19 @@ class Album
         return count($this->songs);
     }
 
-    public function getReleasedAt(): ?\DateTimeInterface
+    public function getReleasedAt(): ?DateTimeInterface
     {
         return $this->releasedAt;
     }
 
-    public function setReleasedAt(\DateTimeInterface $releasedAt): self
+    public function setReleasedAt(DateTimeInterface $releasedAt): self
     {
         $this->releasedAt = $releasedAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -221,7 +233,7 @@ class Album
         return $this;
     }
 
-    public function getUpdatedAt(): \DateTimeInterface
+    public function getUpdatedAt(): DateTimeInterface
     {
         return $this->updatedAt;
     }

@@ -8,6 +8,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class SongNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
+    /** @var ObjectNormalizer */
     private $normalizer;
 
     public function __construct(ObjectNormalizer $normalizer)

@@ -18,54 +18,63 @@ class Song
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
      * @Groups({"get_album_songs"})
+     * @var Uuid
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"get_album_songs"})
+     * @var string
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"get_album_songs"})
+     * @var string|null
      */
     private $youtube;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"get_album_songs"})
+     * @var string|null
      */
     private $spotify;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Groups({"get_album_songs", "get_song_lyrics"})
+     * @var string|null
      */
     private $lyrics;
 
     /**
      * @ORM\ManyToOne(targetEntity=Album::class, inversedBy="songs")
      * @ORM\JoinColumn(nullable=false)
+     * @var Album|null
      */
     private $album;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"get_album_songs"})
+     * @var int
      */
     private $trackId;
 
     /**
      * @ORM\Column(type="simple_array", nullable=true)
      * @Groups({"get_album_songs"})
+     * @var string[]
      */
     private $authors = [];
 
     /**
      * @ORM\Column(type="simple_array", nullable=true)
      * @Groups({"get_album_songs"})
+     * @var string[]
      */
     private $guests = [];
 
@@ -162,7 +171,11 @@ class Song
             : null;
     }
 
-    public function setAuthors($authors): self
+    /**
+     * @param string[]|string $authors
+     * @return $this
+     */
+    public function setAuthors(mixed $authors): self
     {
         if(is_string($authors)) {
             $authors = explode(',', $authors);
@@ -179,7 +192,11 @@ class Song
             : null;
     }
 
-    public function setGuests($guests): self
+    /**
+     * @param string[]|string $guests
+     * @return $this
+     */
+    public function setGuests(mixed $guests): self
     {
         if(is_string($guests)) {
             $guests = explode(',', $guests);

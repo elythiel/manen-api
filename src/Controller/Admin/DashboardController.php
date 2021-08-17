@@ -23,25 +23,10 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
         // redirect to some CRUD controller
+        /** @var AdminUrlGenerator $routeBuilder */
         $routeBuilder = $this->get(AdminUrlGenerator::class);
 
         return $this->redirect($routeBuilder->setController(AlbumCrudController::class)->generateUrl());
-    }
-
-    /**
-     * @Route("/admin/phpinfo", name="easyadmin_phpinfo")
-     */
-    public function phpInfoAction(): Response
-    {
-        if ($this->container->has('profiler')) {
-            $this->container->get('profiler')->disable();
-        }
-        ob_start();
-        phpinfo();
-        $str = ob_get_contents();
-        ob_get_clean();
-
-        return new Response($str);
     }
 
     public function configureDashboard(): Dashboard
