@@ -29,7 +29,8 @@ class AlbumCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-            ->remove(Crud::PAGE_INDEX, Action::DELETE);
+            ->remove(Crud::PAGE_INDEX, Action::DELETE)
+        ;
     }
 
     public function configureFields(string $pageName): iterable
@@ -42,7 +43,7 @@ class AlbumCrudController extends AbstractCrudController
             TextField::new('imageFile')
                 ->setFormType(VichImageType::class)
                 ->setFormTypeOptions([
-                    'allow_delete' => false
+                    'allow_delete' => false,
                 ])
                 ->setLabel('Cover')
                 ->onlyOnForms(),
@@ -62,11 +63,11 @@ class AlbumCrudController extends AbstractCrudController
                     'entry_type' => SongType::class,
                     'allow_add' => true,
                     'allow_delete' => false,
-                    'delete_empty' => false
+                    'delete_empty' => false,
                 ]),
             IntegerField::new('countSongs')
                 ->setLabel('Songs')
-                ->onlyOnIndex()
+                ->onlyOnIndex(),
         ];
     }
 }

@@ -9,23 +9,23 @@ use Faker\Factory;
 
 class GalleryFixtures extends Fixture
 {
-    const IMAGE_DIR = 'public/uploads/gallery';
+    public const IMAGE_DIR = 'public/uploads/gallery';
 
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 15; ++$i) {
             $width = rand(400, 1200);
             $height = rand(400, 1200);
-            $imageName = $faker->uuid . '.jpg';
-            $imagePath =  self::IMAGE_DIR . '/' . $imageName;
-            if($this->saveRandomImage($imagePath, $width, $height)) {
+            $imageName = $faker->uuid.'.jpg';
+            $imagePath = self::IMAGE_DIR.'/'.$imageName;
+            if ($this->saveRandomImage($imagePath, $width, $height)) {
                 $galleryImage = (new GalleryImage())
                     ->setDescription($faker->text(100))
-                    ->setImage($imageName);
+                    ->setImage($imageName)
+                ;
                 $manager->persist($galleryImage);
             }
-
         }
 
         $manager->flush();
