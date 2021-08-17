@@ -4,15 +4,20 @@ $finder = (new PhpCsFixer\Finder())
     ->in(__DIR__)
     ->exclude('vendor')
     ->exclude('var')
-    ->notPath('src/Kernel.php')
     ->exclude('public/bundles')
     ->exclude('public/build')
-    ->notPath('public/css/admin.css')
-    ->notPath('public/index.php')
     ->exclude('node_modules')
     ->exclude('config')
     ->exclude('bin')
     ->exclude('assets')
+    ->notPath([
+        'src/Kernel.php',
+        'public/css/admin.css',
+        'public/index.php',
+        'deploy.php',
+        '.php-cs-fixer.dist.php',
+    ])
+    ->notName(['deploy.php', '.php-cs-fixer'])
     ->name('*.php')
     ->ignoreDotFiles(true)
 ;
@@ -22,7 +27,7 @@ return (new PhpCsFixer\Config())
         '@PhpCsFixer' => true,
         '@Symfony' => true,
         '@PHP80Migration' => true,
-        '@DoctrineAnnotation' => true
+        '@DoctrineAnnotation' => true,
     ])
     ->setFinder($finder)
 ;
