@@ -17,7 +17,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=AlbumRepository::class)
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
  */
 class Album
@@ -26,6 +26,7 @@ class Album
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
      * @Groups({"get_albums"})
+     *
      * @var Uuid
      */
     private $id;
@@ -33,6 +34,7 @@ class Album
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"get_albums", "get_song"})
+     *
      * @var string
      */
     private $title;
@@ -40,6 +42,7 @@ class Album
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"get_albums"})
+     *
      * @var string|null
      */
     private $youtube;
@@ -47,6 +50,7 @@ class Album
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"get_albums"})
+     *
      * @var string|null
      */
     private $spotify;
@@ -54,20 +58,23 @@ class Album
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"get_albums"})
+     *
      * @var string|null
      */
     private $image;
 
     /**
      * @Vich\UploadableField(mapping="album_images", fileNameProperty="image")
-     * @Assert\Image()
+     * @Assert\Image
+     *
      * @var File|null
      */
     private $imageFile;
 
     /**
      * @ORM\OneToMany(targetEntity=Song::class, mappedBy="album", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\OrderBy({"trackId" = "ASC"})
+     * @ORM\OrderBy({"trackId": "ASC"})
+     *
      * @var Collection<Song>
      */
     private $songs;
@@ -75,18 +82,21 @@ class Album
     /**
      * @ORM\Column(type="date")
      * @Groups({"get_albums"})
+     *
      * @var DateTimeInterface
      */
     private $releasedAt;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface
      */
     private $updatedAt;
@@ -98,8 +108,9 @@ class Album
         $this->updatedAt = new DateTime();
     }
 
-    public function __toString(): string {
-        return $this->getTitle(); 
+    public function __toString(): string
+    {
+        return $this->getTitle();
     }
 
     public function getId(): Uuid
@@ -164,7 +175,7 @@ class Album
     {
         $this->imageFile = $file;
 
-        if($file) {
+        if ($file) {
             $this->setUpdatedAt();
         }
 
@@ -244,6 +255,7 @@ class Album
     public function setUpdatedAt(): self
     {
         $this->updatedAt = new DateTimeImmutable();
+
         return $this;
     }
 }

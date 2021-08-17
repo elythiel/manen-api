@@ -19,25 +19,26 @@ class SongType extends AbstractType
         $builder
             ->add('trackId', IntegerType::class, [
                 'constraints' => [
-                    new NotBlank()
-                ]
+                    new NotBlank(),
+                ],
             ])
             ->add('title', TextType::class, [
                 'constraints' => [
-                    new NotBlank()
-                ]
+                    new NotBlank(),
+                ],
             ])
             ->add('youtube', UrlType::class)
             ->add('spotify', UrlType::class)
             ->add('authors', TextType::class, [
-                'help' => 'Auteurs, séparés par des virgules'
+                'help' => 'Auteurs, séparés par des virgules',
             ])
             ->add('guests', TextType::class, [
-                'help' => 'Invités, séparés par des virgules'
+                'help' => 'Invités, séparés par des virgules',
             ])
             ->add('lyrics', CKEditorType::class, [
-                'config' => ['song_lyrics']
-            ]);
+                'config' => ['song_lyrics'],
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -47,8 +48,7 @@ class SongType extends AbstractType
             'allow_add' => true,
             'allow_delete' => false,
             'delete_empty' => false,
-            'entry_options' => []
+            'entry_options' => [],
         ]);
     }
-
 }

@@ -4,29 +4,33 @@ namespace App\Entity;
 
 use App\Repository\AdminRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=AdminRepository::class)
  */
-class Admin implements UserInterface
+class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
+     *
      * @var Uuid
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     *
      * @var string
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
+     *
      * @var string[]
      */
     private $roles = [];
@@ -83,6 +87,7 @@ class Admin implements UserInterface
 
     /**
      * @param string[] $roles
+     *
      * @return $this
      */
     public function setRoles(array $roles): self

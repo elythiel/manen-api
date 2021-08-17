@@ -18,6 +18,7 @@ class Song
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
      * @Groups({"get_album_songs"})
+     *
      * @var Uuid
      */
     private $id;
@@ -25,6 +26,7 @@ class Song
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"get_album_songs"})
+     *
      * @var string
      */
     private $title;
@@ -32,6 +34,7 @@ class Song
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"get_album_songs"})
+     *
      * @var string|null
      */
     private $youtube;
@@ -39,6 +42,7 @@ class Song
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"get_album_songs"})
+     *
      * @var string|null
      */
     private $spotify;
@@ -46,6 +50,7 @@ class Song
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Groups({"get_album_songs", "get_song_lyrics"})
+     *
      * @var string|null
      */
     private $lyrics;
@@ -53,6 +58,7 @@ class Song
     /**
      * @ORM\ManyToOne(targetEntity=Album::class, inversedBy="songs")
      * @ORM\JoinColumn(nullable=false)
+     *
      * @var Album|null
      */
     private $album;
@@ -60,6 +66,7 @@ class Song
     /**
      * @ORM\Column(type="integer")
      * @Groups({"get_album_songs"})
+     *
      * @var int
      */
     private $trackId;
@@ -67,6 +74,7 @@ class Song
     /**
      * @ORM\Column(type="simple_array", nullable=true)
      * @Groups({"get_album_songs"})
+     *
      * @var string[]
      */
     private $authors = [];
@@ -74,6 +82,7 @@ class Song
     /**
      * @ORM\Column(type="simple_array", nullable=true)
      * @Groups({"get_album_songs"})
+     *
      * @var string[]
      */
     private $guests = [];
@@ -83,8 +92,9 @@ class Song
         $this->id = Uuid::v4();
     }
 
-    public function __toString(): string {
-        return $this->getTrackId() . '. ' . $this->getTitle();
+    public function __toString(): string
+    {
+        return $this->getTrackId().'. '.$this->getTitle();
     }
 
     public function getId(): Uuid
@@ -173,11 +183,12 @@ class Song
 
     /**
      * @param string[]|string $authors
+     *
      * @return $this
      */
     public function setAuthors(mixed $authors): self
     {
-        if(is_string($authors)) {
+        if (is_string($authors)) {
             $authors = explode(',', $authors);
         }
         $this->authors = $authors;
@@ -194,11 +205,12 @@ class Song
 
     /**
      * @param string[]|string $guests
+     *
      * @return $this
      */
     public function setGuests(mixed $guests): self
     {
-        if(is_string($guests)) {
+        if (is_string($guests)) {
             $guests = explode(',', $guests);
         }
         $this->guests = $guests;

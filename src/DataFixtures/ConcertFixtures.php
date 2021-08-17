@@ -13,15 +13,16 @@ class ConcertFixtures extends Fixture
     {
         $faker = Factory::create();
 
-        for($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 30; ++$i) {
             $concert = (new Concert())
                 ->setTitle($faker->text(50))
                 ->setDate($faker->dateTimeBetween('-2years', '+2years'))
-                ->setLocation($faker->text(30));
-            if($faker->boolean()) {
+                ->setLocation($faker->text(30))
+            ;
+            if ($faker->boolean()) {
                 $concert->setMoreLink($faker->url);
             }
-            if($faker->boolean()) {
+            if ($faker->boolean()) {
                 $concert->setPurchaseLink($faker->url);
             }
 

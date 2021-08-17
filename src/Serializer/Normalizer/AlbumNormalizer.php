@@ -24,8 +24,7 @@ class AlbumNormalizer implements NormalizerInterface, CacheableSupportsMethodInt
         ObjectNormalizer $normalizer,
         UrlHelper $urlHelper,
         ParameterBagInterface $params
-    )
-    {
+    ) {
         $this->normalizer = $normalizer;
         $this->urlHelper = $urlHelper;
         $this->imagePath = $params->get('album_images');
@@ -35,7 +34,7 @@ class AlbumNormalizer implements NormalizerInterface, CacheableSupportsMethodInt
     {
         $data = $this->normalizer->normalize($object, $format, $context);
 
-        $data['image'] = $this->urlHelper->getAbsoluteUrl($this->imagePath . '/' . $data['image']);
+        $data['image'] = $this->urlHelper->getAbsoluteUrl($this->imagePath.'/'.$data['image']);
 
         return $data;
     }

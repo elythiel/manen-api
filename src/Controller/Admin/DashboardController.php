@@ -32,7 +32,8 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Manen Api');
+            ->setTitle('Manen Api')
+        ;
     }
 
     public function configureMenuItems(): iterable
@@ -50,14 +51,15 @@ class DashboardController extends AbstractDashboardController
 
     public function configureAssets(): Assets
     {
-        $assets = Assets::new()
-            ->addCssFile('css/admin.css');
-        return $assets;
+        return Assets::new()
+            ->addCssFile('css/admin.css')
+        ;
     }
 
     public function configureCrud(): Crud
     {
         return parent::configureCrud()
-            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
+        ;
     }
 }

@@ -23,7 +23,8 @@ class GalleryImageCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setPageTitle(Action::INDEX, 'Galerie d\'images');
+            ->setPageTitle(Action::INDEX, 'Galerie d\'images')
+        ;
     }
 
     public function configureActions(Actions $actions): Actions
@@ -39,7 +40,7 @@ class GalleryImageCrudController extends AbstractCrudController
             TextField::new('imageFile')
                 ->setFormType(VichImageType::class)
                 ->setFormTypeOptions([
-                    'allow_delete' => false
+                    'allow_delete' => false,
                 ])
                 ->onlyOnForms(),
             ImageField::new('image')
@@ -47,7 +48,7 @@ class GalleryImageCrudController extends AbstractCrudController
                 ->onlyOnIndex(),
             DateTimeField::new('createdAt')
                 ->hideOnForm()
-                ->setLabel('Créé le')
+                ->setLabel('Créé le'),
         ];
     }
 }

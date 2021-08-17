@@ -15,36 +15,42 @@ class Concert
     /**
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
+     *
      * @var Uuid
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @var string
      */
     private $title;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @var DateTimeInterface
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
      * @var string|null
      */
     private $location;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
      * @var string|null
      */
     private $purchaseLink;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
      * @var string|null
      */
     private $moreLink;

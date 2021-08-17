@@ -4,9 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Concert;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -23,7 +21,8 @@ class ConcertCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setPageTitle(Action::INDEX, 'Liste des concerts');
+            ->setPageTitle(Action::INDEX, 'Liste des concerts')
+        ;
     }
 
     public function configureFields(string $pageName): iterable
@@ -34,7 +33,7 @@ class ConcertCrudController extends AbstractCrudController
             DateTimeField::new('date')->setLabel('Date et heure'),
             TextField::new('location')->setLabel('Lieu'),
             UrlField::new('purchaseLink')->setLabel('Lien d\'achat'),
-            UrlField::new('moreLink')->setLabel('Lien "Plus d\'informations"')
+            UrlField::new('moreLink')->setLabel('Lien "Plus d\'informations"'),
         ];
     }
 }
