@@ -17,7 +17,7 @@ set('application', 'Manen API');
 set('repository', 'git@github.com:elythiel/manen-api.git');
 
 // Set composer options
-set('composer_options', '{{composer_action}} --no-dev --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader --no-scripts');
+set('composer_options', '{{composer_action}} --no-dev --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
 
 set('bin/yarn', function () {
     return locateBinaryPath('yarn');
@@ -50,7 +50,6 @@ before('deploy:symlink', 'deploy:build:assets');
 // Upload assets
 task('upload:assets', function (): void {
     upload(__DIR__.'/public/build/', '{{release_path}}/public/build');
-    upload(__DIR__.'/public/bundles/', '{{release_path}}/public/bundles');
 });
 
 after('deploy:build:assets', 'upload:assets');
