@@ -15,7 +15,6 @@ use Symfony\Component\Uid\Uuid;
 
 class ApiController extends AbstractController
 {
-
     /**
      * @Route("/", name="home")
      */
