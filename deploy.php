@@ -36,21 +36,6 @@ host('prod')
     ->set('deploy_path', getenv('DEPLOYER_DEPLOY_PATH'))
 ;
 
-task('deploy', [
-    'deploy:info',
-    'deploy:prepare',
-    'deploy:lock',
-    'deploy:release',
-    'deploy:update_code',
-    'deploy:shared',
-    'deploy:vendors',
-    'deploy:cache:clear',
-    'deploy:cache:warmup',
-    'deploy:symlink',
-    'deploy:unlock',
-    'cleanup',
-]);
-
 // [Optional]  Migrate database before symlink new release.
 before('deploy:symlink', 'database:migrate');
 
@@ -65,6 +50,7 @@ before('deploy:symlink', 'deploy:build:assets');
 // Upload assets
 task('upload:assets', function (): void {
     upload(__DIR__.'/public/build/', '{{release_path}}/public/build');
+    upload(__DIR__.'/public/bundles/', '{{release_path}}/public/bundles');
 });
 
 after('deploy:build:assets', 'upload:assets');
