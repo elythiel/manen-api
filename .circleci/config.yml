@@ -1,0 +1,95 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: cimg/php:7.4-browsers
+        environment:
+          POSTGRES_HOST: 127.0.0.1
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: manen
+      - image: postgres
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: manen
+    working_directory: ~/symfony # directory where steps will run
+    steps: # a set of executable commands
+      - checkout # special step to check out source code to working directory
+      - run: sudo apt update
+      - run: sudo composer self-update
+      - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+            - composer-v1-
+      - run: composer install -n --prefer-dist --no-scripts
+      - save_cache: # special step to save the dependency cache with the `composer.lock` cache key template
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - restore_cache: # special step to restore the dependency cache if `package.json` does not change
+          keys:
+            - node-v1-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+            - node-v1-
+      - run: cp .env .env.local
+      - run: yarn install
+      - save_cache: # special step to save the dependency cache with the `package.json` cache key template
+          key: node-v1-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run: yarn run encore production
+      - run: curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer
+      - run: chmod a+x php-cs-fixer
+      - run: ./php-cs-fixer --diff --dry-run -v --allow-risky=yes fix
+      - run: php -d memory_limit=-1 vendor/bin/phpstan analyse src --level 5
+
+  deploy:
+    docker:
+      - image: cimg/php:7.4-browsers
+    working_directory: ~/symfony
+    steps:
+      - checkout
+      - run: sudo apt update && sudo apt install rsync # rsync needed to deploy assets
+      - add_ssh_keys:
+          fingerprints:
+            - d3:65:d3:f6:34:69:27:55:2f:ca:08:ff:76:f9:8c:41
+      - run:
+          name: Install Deployer
+          command: |
+            curl -LO https://deployer.org/deployer.phar
+            sudo mv deployer.phar /usr/local/bin/dep
+            sudo chmod +x /usr/local/bin/dep
+      - run:
+          name: Deploy
+          command: | # Add our test server as "known host"
+            echo '[vps-4fef009e.vps.ovh.net]:60006,[51.210.42.117]:60006 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAnt4Poj9uEmjTxhU/mMUfEXUOCZEOeDzOYYGxE+sklDs9hI4iCgS/2jPH+3SIWQGi8ACNRsbNAU9Hvkl3Xk7rM=' >> ~/.ssh/known_hosts
+            dep deploy -vvv
+
+workflows:
+  version: 2
+  develop_build_only:
+    jobs:
+      - approve:
+          type: approval
+          filters:
+            branches:
+              only:
+                - develop
+      - build:
+          requires:
+            - approve
+
+  build_and_deploy:
+    jobs:
+      - approve:
+          type: approval
+          filters:
+            branches:
+              only:
+                - main
+      - deploy:
+          requires:
+            - approve

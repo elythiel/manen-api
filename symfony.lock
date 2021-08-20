@@ -8,6 +8,12 @@
     "composer/xdebug-handler": {
         "version": "2.0.2"
     },
+    "deployer/deployer": {
+        "version": "v6.8.0"
+    },
+    "deployer/phar-update": {
+        "version": "v2.2.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -182,6 +188,9 @@
     },
     "phpstan/phpstan": {
         "version": "0.12.94"
+    },
+    "pimple/pimple": {
+        "version": "v3.4.0"
     },
     "psr/cache": {
         "version": "1.0.1"
