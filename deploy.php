@@ -1,11 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Deployer;
 
 set('default_stage', 'prod');
 
-require 'recipe/symfony.php';
+require 'recipe/symfony4.php';
+
+set('ssh_multiplexing', false);
 
 // Project name
 set('application', 'Manen API');
@@ -14,11 +17,15 @@ set('application', 'Manen API');
 set('repository', 'git@github.com:elythiel/manen-api.git');
 
 // Set composer options
-set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader --no-scripts');
+set('composer_options', '{{composer_action}} --no-dev --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader --no-scripts');
+
+set('bin/yarn', function () {
+    return locateBinaryPath('yarn');
+});
 
 // shared files & folders
 add('shared_files', ['.env.local']);
-add('shared_dirs', ['public/upload']);
+add('shared_dirs', ['public/uploads']);
 
 // Hosts
 host('prod')
@@ -26,16 +33,31 @@ host('prod')
     ->port((int) getenv('DEPLOYER_PORT'))
     ->user(getenv('DEPLOYER_USER'))
     ->stage('prod')
-    ->set('deploy_path', '/var/www/html')
+    ->set('deploy_path', getenv('DEPLOYER_DEPLOY_PATH'))
 ;
 
+task('deploy', [
+    'deploy:info',
+    'deploy:prepare',
+    'deploy:lock',
+    'deploy:release',
+    'deploy:update_code',
+    'deploy:shared',
+    'deploy:vendors',
+    'deploy:cache:clear',
+    'deploy:cache:warmup',
+    'deploy:symlink',
+    'deploy:unlock',
+    'cleanup',
+]);
+
 // [Optional]  Migrate database before symlink new release.
-// before('deploy:symlink', 'database:migrate');
+before('deploy:symlink', 'database:migrate');
 
 // Build yarn locally
 task('deploy:build:assets', function (): void {
-    run('yarn install');
-    run('yarn encore production');
+    run('{{bin/yarn}} install');
+    run('{{bin/yarn}} encore production');
 })->local()->desc('Install front-end assets');
 
 before('deploy:symlink', 'deploy:build:assets');

@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cimg/php:8.0-browsers
+      - image: cimg/php:7.4-browsers
         environment:
           POSTGRES_HOST: 127.0.0.1
           POSTGRES_USER: postgres
@@ -48,10 +48,14 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/php:7.4-browsers
+      - image: cimg/php:7.4-browsers
     working_directory: ~/symfony
     steps:
       - checkout
+      - run: sudo apt update && sudo apt install rsync # rsync needed to deploy assets
+      - add_ssh_keys:
+          fingerprints:
+            - d3:65:d3:f6:34:69:27:55:2f:ca:08:ff:76:f9:8c:41
       - run:
           name: Install Deployer
           command: |
@@ -61,8 +65,8 @@ jobs:
       - run:
           name: Deploy
           command: | # Add our test server as "known host"
-            echo '|1|eqoArfioX6VlupKTFQ6vdavJgZk=|0iGC0C/E1U5oPZGuO1Xd0Gux8oU= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==' >> ~/.ssh/known_hosts
-            dep deploy
+            echo '[vps-4fef009e.vps.ovh.net]:60006,[51.210.42.117]:60006 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAnt4Poj9uEmjTxhU/mMUfEXUOCZEOeDzOYYGxE+sklDs9hI4iCgS/2jPH+3SIWQGi8ACNRsbNAU9Hvkl3Xk7rM=' >> ~/.ssh/known_hosts
+            dep deploy -vvv
 
 workflows:
   version: 2

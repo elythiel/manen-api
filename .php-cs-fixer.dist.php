@@ -10,14 +10,11 @@ $finder = (new PhpCsFixer\Finder())
     ->exclude('config')
     ->exclude('bin')
     ->exclude('assets')
-    ->notPath([
-        'src/Kernel.php',
-        'public/css/admin.css',
-        'public/index.php',
-        'deploy.php',
-        '.php-cs-fixer.dist.php',
-    ])
-    ->notName(['deploy.php', '.php-cs-fixer'])
+    ->notPath('src/Kernel.php')
+    ->notPath('public/css/admin.css')
+    ->notPath('public/index.php')
+    ->notName('deploy.php')
+    ->notName('.php-cs-fixer')
     ->name('*.php')
     ->ignoreDotFiles(true)
 ;
