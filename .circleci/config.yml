@@ -70,19 +70,26 @@ jobs:
 
 workflows:
   version: 2
-  master_deploy:
+  develop_build_only:
     jobs:
-      - build:
+      - approve:
           type: approval
           filters:
             branches:
               only:
                 - develop
-                - main
-      - deploy:
+      - build:
           requires:
-            - build
+            - approve
+
+  build_and_deploy:
+    jobs:
+      - approve:
+          type: approval
           filters:
             branches:
               only:
                 - main
+      - deploy:
+          requires:
+            - approve
