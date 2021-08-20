@@ -70,9 +70,19 @@ jobs:
 
 workflows:
   version: 2
-  notify_deploy:
+  master_deploy:
     jobs:
-      - build
+      - build:
+          type: approval
+          filters:
+            branches:
+              only:
+                - develop
+                - main
       - deploy:
           requires:
             - build
+          filters:
+            branches:
+              only:
+                - main
