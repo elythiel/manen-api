@@ -33,6 +33,7 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('Manen Api')
+            ->setFaviconPath('/images/favicon.png')
         ;
     }
 

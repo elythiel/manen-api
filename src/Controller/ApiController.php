@@ -15,6 +15,15 @@ use Symfony\Component\Uid\Uuid;
 
 class ApiController extends AbstractController
 {
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function home(): Response
+    {
+        return $this->render('home.html.twig');
+    }
+
     /**
      * @Route("/albums", name="api_get_albums", methods={"GET"}, format="json")
      */
