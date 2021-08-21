@@ -66,7 +66,7 @@ jobs:
           name: Deploy
           command: | # Add our test server as "known host"
             echo '[vps-4fef009e.vps.ovh.net]:60006,[51.210.42.117]:60006 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAnt4Poj9uEmjTxhU/mMUfEXUOCZEOeDzOYYGxE+sklDs9hI4iCgS/2jPH+3SIWQGi8ACNRsbNAU9Hvkl3Xk7rM=' >> ~/.ssh/known_hosts
-            dep deploy -vvv
+            dep deploy -v
 
 workflows:
   version: 2
