@@ -26,6 +26,10 @@ set('bin/yarn', function () {
 // shared files & folders
 add('shared_files', ['.env.local']);
 add('shared_dirs', ['public/uploads']);
+set('writable_dirs', [
+    'var',
+    'public/uploads',
+]);
 
 // Hosts
 host('prod')
